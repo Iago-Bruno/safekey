@@ -1,0 +1,29 @@
+.login-form {
+  & .background-header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 250px;
+    background-image: url("../../assets/vectors/Ellipse1.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: -1;
+  }
+
+  & .background-header::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 350px;
+    height: 350px;
+    background-image: url("../../assets/vectors/Ellipse2.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: -1;
+  }
+}
