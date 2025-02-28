@@ -17,8 +17,7 @@ import { ToastAction } from "@/components/ui/toast";
 import { CloseCircle } from "iconsax-react";
 import { useNavigate } from "react-router-dom";
 
-import "./loginForm.scss";
-import { UsersTypeService } from "@/services/users-type-service";
+import "./authForm.scss";
 
 const formSchema = z.object({
   email: z
@@ -41,33 +40,26 @@ export const LoginForm = () => {
     try {
       const response = await AuthService.login(data);
 
+      console.log(response);
+
       if (response.status === 200) {
         const responseUserData = response.data.user;
         localStorage.setItem("access_user", JSON.stringify(responseUserData));
 
-        const responseUserTypes = await UsersTypeService.getUsersType();
-        const responseUserTypesData = responseUserTypes.data.data;
+        toast({
+          variant: "success",
+          title: `Login realizado como um ${responseUserData.type.type}!`,
+          action: (
+            <ToastAction
+              className="bg-transparent border-0 p-0 hover:bg-transparent"
+              altText="Goto schedule to undo"
+            >
+              <CloseCircle size="24" color="#ffffff" variant="Broken" />
+            </ToastAction>
+          ),
+        });
 
-        if (responseUserTypes.status === 200) {
-          toast({
-            variant: "success",
-            title: `Login realizado como um ${
-              responseUserTypesData.find(
-                (type: any) => type.id == responseUserData.user_type_id
-              ).name
-            }!`,
-            action: (
-              <ToastAction
-                className="bg-transparent border-0 p-0 hover:bg-transparent"
-                altText="Goto schedule to undo"
-              >
-                <CloseCircle size="24" color="#ffffff" variant="Broken" />
-              </ToastAction>
-            ),
-          });
-
-          navigate("/dashboard");
-        }
+        navigate("/dashboard");
       }
     } catch (error) {
       console.error(error);
@@ -125,7 +117,7 @@ export const LoginForm = () => {
                   </FormItem>
                 )}
               />
-              <Button variant={"primary"} type="submit" className="w-full">
+              <Button variant={"default"} type="submit" className="w-full">
                 Entrar
               </Button>
             </form>

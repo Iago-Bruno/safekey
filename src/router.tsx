@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import { LoginForm } from "./pages/login-form/loginForm";
+import { LoginForm } from "./pages/auth/authForm";
 import { Dashboard } from "./pages/dashboard/Dashboard";
 import { RegisterLayout } from "./pages/register-form/register-layout";
 import { Step1 } from "./pages/register-form/steps/step1";
@@ -8,8 +8,9 @@ import { Step2 } from "./pages/register-form/steps/step2";
 import { Step3 } from "./pages/register-form/steps/step3";
 import { UsersList } from "./pages/users-list/usersList";
 import { Layout } from "./pages/layout";
-import { Labs } from "./pages/labs/labs";
+import { RoomsLayout } from "./pages/rooms/rooms-layout";
 import LoggedGuard from "./guards/logged_guard";
+import { TemplateDecision } from "./templates/template-decision";
 
 export const Router = createBrowserRouter([
   {
@@ -51,9 +52,13 @@ export const Router = createBrowserRouter([
         element: <UsersList />,
       },
       {
-        path: "labs",
-        element: <Labs />,
+        path: "rooms",
+        element: <RoomsLayout />,
       },
     ],
+  },
+  {
+    path: "/decision/reservation/:id",
+    element: <TemplateDecision />,
   },
 ]);

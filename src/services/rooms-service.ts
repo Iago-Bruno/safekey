@@ -1,8 +1,8 @@
 import { http } from "../../http";
 
-export const LabsService = {
-  async getLabs() {
-    return await http.get(`/api/labs`);
+export const RoomsService = {
+  async getRooms() {
+    return await http.get(`/rooms/`);
   },
 
   async changeLabStatus(data: any) {

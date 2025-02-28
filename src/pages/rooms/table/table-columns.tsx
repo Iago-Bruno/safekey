@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { IUsersTableCollums } from "@/interfaces/IUsersTableCollums";
+import { IRoomsTableCollums } from "@/interfaces/IRoomsTableCollums";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowSwapVertical } from "iconsax-react";
 
-export const columns: ColumnDef<IUsersTableCollums>[] = [
+export const RoomsColumns: ColumnDef<IRoomsTableCollums>[] = [
   {
     accessorKey: "id",
     header: ({ column }) => {
@@ -35,7 +35,7 @@ export const columns: ColumnDef<IUsersTableCollums>[] = [
     },
   },
   {
-    accessorKey: "email",
+    accessorKey: "bloco",
     header: ({ column }) => {
       return (
         <Button
@@ -43,7 +43,22 @@ export const columns: ColumnDef<IUsersTableCollums>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           className="w-full p-0 justify-between"
         >
-          EMAIL
+          BLOCO
+          <ArrowSwapVertical size="20" />
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "andar",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="w-full p-0 justify-between"
+        >
+          ANDAR
           <ArrowSwapVertical size="20" />
         </Button>
       );
@@ -59,6 +74,21 @@ export const columns: ColumnDef<IUsersTableCollums>[] = [
           className="w-full p-0 justify-between"
         >
           TIPO DE ACESSO
+          <ArrowSwapVertical size="20" />
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "disponibilidade",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="w-full p-0 justify-between"
+        >
+          DISPONIBILIDADE
           <ArrowSwapVertical size="20" />
         </Button>
       );

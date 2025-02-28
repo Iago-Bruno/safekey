@@ -2,11 +2,13 @@ import { RouterProvider } from "react-router-dom";
 import { Router } from "./router";
 import { Toaster } from "@/components/ui/toaster";
 
-import "./App.css";
+import "./styles/App.css";
+import "./styles/embla.css";
+import "./styles/sandbox.css";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App theme-dark">
       <Toaster />
       <RouterProvider router={Router} />
     </div>
