@@ -1,7 +1,6 @@
 import { saveAs } from "file-saver";
 import * as XLSX from "xlsx";
 import pdfMake from "pdfmake/build/pdfmake";
-import pdfFonts from "pdfmake/build/vfs_fonts";
 import {
   Document,
   Packer,
@@ -14,7 +13,17 @@ import {
 import { IReservations } from "@/interfaces/IReservations";
 import { DateUtils } from "./dateUtils";
 
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
+pdfMake.fonts = {
+  Roboto: {
+    normal:
+      "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Regular.ttf",
+    bold: "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Medium.ttf",
+    italics:
+      "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Italic.ttf",
+    bolditalics:
+      "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-MediumItalic.ttf",
+  },
+};
 
 // Função para exportar PDF
 export const exportToPDF = (reservations: IReservations[]) => {
@@ -24,7 +33,18 @@ export const exportToPDF = (reservations: IReservations[]) => {
       {
         table: {
           body: [
-            ["ID", "Data da Reserva", "Horário de Início", "Horário de Termino", "Motivo da Reserva", "Comentários extras", "Status da Reserva", "Reservado Por", "Responsável", "Sala Reservada"],
+            [
+              "ID",
+              "Data da Reserva",
+              "Horário de Início",
+              "Horário de Termino",
+              "Motivo da Reserva",
+              "Comentários extras",
+              "Status da Reserva",
+              "Reservado Por",
+              "Responsável",
+              "Sala Reservada",
+            ],
             ...reservations.map((reservation) => [
               reservation.id,
               DateUtils.formatDateToPTBR(reservation.date_schedulling),
@@ -34,8 +54,14 @@ export const exportToPDF = (reservations: IReservations[]) => {
               reservation.commentary,
               reservation.status,
               reservation.user.name + " | " + `(${reservation.user.type.type})`,
-              reservation.responsible.name + " | " + `(${reservation.responsible.type.type})`,
-              reservation.room.name + " - " + reservation.room.block + " - " + reservation.room.floor,
+              reservation.responsible.name +
+                " | " +
+                `(${reservation.responsible.type.type})`,
+              reservation.room.name +
+                " - " +
+                reservation.room.block +
+                " - " +
+                reservation.room.floor,
             ]),
           ],
         },
@@ -53,16 +79,58 @@ export const exportToDOCX = (reservations: IReservations[]) => {
     (reservation) =>
       new TableRow({
         children: [
-          new TableCell({ children: [new Paragraph(reservation.id.toString())] }),
-          new TableCell({ children: [new Paragraph(DateUtils.formatDateToPTBR(reservation.date_schedulling))] }),
-          new TableCell({ children: [new Paragraph(DateUtils.formatTimeToHHMM(reservation.start_time))] }),
-          new TableCell({ children: [new Paragraph(DateUtils.formatTimeToHHMM(reservation.end_time))] }),
+          new TableCell({
+            children: [new Paragraph(reservation.id.toString())],
+          }),
+          new TableCell({
+            children: [
+              new Paragraph(
+                DateUtils.formatDateToPTBR(reservation.date_schedulling)
+              ),
+            ],
+          }),
+          new TableCell({
+            children: [
+              new Paragraph(DateUtils.formatTimeToHHMM(reservation.start_time)),
+            ],
+          }),
+          new TableCell({
+            children: [
+              new Paragraph(DateUtils.formatTimeToHHMM(reservation.end_time)),
+            ],
+          }),
           new TableCell({ children: [new Paragraph(reservation.reason)] }),
           new TableCell({ children: [new Paragraph(reservation.commentary)] }),
           new TableCell({ children: [new Paragraph(reservation.status)] }),
-          new TableCell({ children: [new Paragraph(reservation.user.name + " | " + `(${reservation.user.type.type})`)] }),
-          new TableCell({ children: [new Paragraph(reservation.responsible.name + " | " + `(${reservation.responsible.type.type})`)] }),
-          new TableCell({ children: [new Paragraph(reservation.room.name + " - " + reservation.room.block + " - " + reservation.room.floor)] }),
+          new TableCell({
+            children: [
+              new Paragraph(
+                reservation.user.name +
+                  " | " +
+                  `(${reservation.user.type.type})`
+              ),
+            ],
+          }),
+          new TableCell({
+            children: [
+              new Paragraph(
+                reservation.responsible.name +
+                  " | " +
+                  `(${reservation.responsible.type.type})`
+              ),
+            ],
+          }),
+          new TableCell({
+            children: [
+              new Paragraph(
+                reservation.room.name +
+                  " - " +
+                  reservation.room.block +
+                  " - " +
+                  reservation.room.floor
+              ),
+            ],
+          }),
         ],
       })
   );
@@ -118,9 +186,18 @@ export const exportToXLSX = (reservations: IReservations[]) => {
       MotivodaReserva: reservation.reason,
       Comentariosextras: reservation.commentary,
       StatusdaReserva: reservation.status,
-      ReservadoPor: reservation.user.name + " | " + `(${reservation.user.type.type})`,
-      Responsável: reservation.responsible.name + " | " + `(${reservation.responsible.type.type})`,
-      SalaReservada: reservation.room.name + " - " + reservation.room.block + " - " + reservation.room.floor,
+      ReservadoPor:
+        reservation.user.name + " | " + `(${reservation.user.type.type})`,
+      Responsável:
+        reservation.responsible.name +
+        " | " +
+        `(${reservation.responsible.type.type})`,
+      SalaReservada:
+        reservation.room.name +
+        " - " +
+        reservation.room.block +
+        " - " +
+        reservation.room.floor,
     }))
   );
 
@@ -157,8 +234,14 @@ export const exportToCSV = (reservations: IReservations[]) => {
     reservation.commentary,
     reservation.status,
     reservation.user.name + " | " + `(${reservation.user.type.type})`,
-    reservation.responsible.name + " | " + `(${reservation.responsible.type.type})`,
-    reservation.room.name + " - " + reservation.room.block + " - " + reservation.room.floor,
+    reservation.responsible.name +
+      " | " +
+      `(${reservation.responsible.type.type})`,
+    reservation.room.name +
+      " - " +
+      reservation.room.block +
+      " - " +
+      reservation.room.floor,
   ]);
 
   const csvContent = [headers, ...rows].map((e) => e.join(";")).join("\n");

@@ -1,7 +1,6 @@
 import { saveAs } from "file-saver";
 import * as XLSX from "xlsx";
 import pdfMake from "pdfmake/build/pdfmake";
-import pdfFonts from "pdfmake/build/vfs_fonts";
 import {
   Document,
   Packer,
@@ -13,7 +12,17 @@ import {
 } from "docx";
 import { IUsers } from "@/interfaces/IUser";
 
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
+pdfMake.fonts = {
+  Roboto: {
+    normal:
+      "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Regular.ttf",
+    bold: "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Medium.ttf",
+    italics:
+      "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Italic.ttf",
+    bolditalics:
+      "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-MediumItalic.ttf",
+  },
+};
 
 // Função para exportar PDF
 export const exportToPDF = (users: IUsers[]) => {
