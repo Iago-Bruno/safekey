@@ -1,13 +1,13 @@
 import * as React from "react";
-import { NavMain } from "@/components/sidebar/nav-main";
-import { NavUser } from "@/components/sidebar/nav-user";
+import { NavMain } from "@/components/sidebar/navs/nav-main";
+import { NavConfig } from "./navs/nav-config";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { Activity, Buildings, Profile2User } from "iconsax-react";
+import { Activity, Buildings, Clipboard, Profile2User } from "iconsax-react";
 
 // This is sample data.
 const data = {
@@ -27,19 +27,22 @@ const data = {
       icon: Buildings,
       pathname: "/rooms",
     },
+    {
+      title: "Reservas",
+      icon: Clipboard,
+      pathname: "/reservations",
+    },
   ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const loggedUser = JSON.parse(localStorage.getItem("access_user") || "null");
-
   return (
     <Sidebar variant="floating" collapsible="icon" {...props}>
       <SidebarContent>
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter className="justify-center">
-        <NavUser user={loggedUser} />
+        <NavConfig />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

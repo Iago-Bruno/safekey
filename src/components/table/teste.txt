@@ -1,0 +1,27 @@
+// const typeFilterOptions = [
+//   {
+//     label: "Alunos",
+//     value: "Aluno",
+//   },
+//   {
+//     label: "Professores",
+//     value: "Professor",
+//   },
+//   {
+//     label: "Administradores",
+//     value: "Administrador",
+//   },
+// ];
+
+<DefaultTableView
+        columns={columns as ColumnDef<IUsersTableCollums, any>[]}
+        data={data}
+        searchColumnKey="nome"
+        searchPlaceholder="Filtrar por nome..."
+        defaultTypeColumnKey="tipo"
+        typeFilterOptions={typeFilterOptions}
+      >
+        <section className="actions-section">
+          <UsersActions />
+        </section>
+      </DefaultTableView>

@@ -8,7 +8,7 @@ export default function SidebarLayout({
 }>) {
   return (
     <SidebarProvider className="py-4">
-      <AppSidebar />
+      <AppSidebar className="" />
       <main>{children}</main>
     </SidebarProvider>
   );

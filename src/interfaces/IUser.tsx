@@ -1,16 +1,10 @@
-export type IUserType = {
+import { IUserType } from "./IUserType";
+
+export interface IUsers {
   id: number;
   name: string;
   password: string;
   email: string;
-  type: {
-    id: number;
-    type: string;
-  };
+  type: IUserType;
   avatar?: string;
-};
-
-export type IUsersType = {
-  id: number;
-  type: string;
-};
+}

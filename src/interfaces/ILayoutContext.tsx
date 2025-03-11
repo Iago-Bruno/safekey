@@ -1,6 +1,6 @@
-import { IUserType } from "./IUser";
+import { IUsers } from "./IUser";
 
 export type LayoutOutletContextType = {
-  loggedUser: IUserType;
+  loggedUser: IUsers;
   logOutUser: any;
 };

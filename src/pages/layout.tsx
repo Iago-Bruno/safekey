@@ -1,21 +1,18 @@
-import SidebarLayout from "@/components/sidebar/sidebar-layout";
-import { Button } from "@/components/ui/button";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { ChevronsUpDown } from "lucide-react";
 import React, { useState } from "react";
+import SidebarLayout from "@/components/sidebar/sidebar-layout";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { IUsers } from "@/interfaces/IUser";
 import { Outlet } from "react-router-dom";
-
+import safekeyLogo from "../assets/icons/safekey-log.webp";
+import { AuthUtils } from "@/utils/authUtils";
 export interface OutletContextType {
   setHeader: (component: React.ReactNode) => void;
 }
 
 export const Layout = () => {
+  const loggedUser: IUsers | null = AuthUtils.getAccessUser();
+
   const [headerComponent, setHeaderComponent] = useState<React.ReactNode>(null);
-  const [isOpen, setIsOpen] = React.useState(false);
 
   const outletContext: OutletContextType = { setHeader: setHeaderComponent };
 
@@ -24,7 +21,12 @@ export const Layout = () => {
       <section className="main-section w-full h-full flex">
         <section className="flex flex-col w-full h-full p-4 bg-foreground border border-l border-[#7FBDE4] border-opacity-30">
           <section className="header-section">
-            <header className="flex items-center border border-red-100 h-14 mb-8">
+            <header className="flex items-center h-14 mb-8">
+              <img
+                src={safekeyLogo}
+                alt="SafeKey - Logo"
+                className="w-20 h-20"
+              />
               <h1 className="text-black">SafeKey Logo</h1>
             </header>
           </section>
@@ -35,34 +37,32 @@ export const Layout = () => {
             </section>
           </section>
         </section>
-        <section className="rigth-section max-w-[360px] h-full bg-background flex flex-col items-end">
-          <section className="nav-user w-[340px] h-[90px]">
-            <Collapsible
-              open={isOpen}
-              onOpenChange={setIsOpen}
-              className="w-full h-full bg-foreground rounded-bl-[24px] shadow-[-4px_4px_10px_rgba(0,0,0,0.05)]"
-            >
-              <CollapsibleTrigger asChild>
-                <div className="flex items-center justify-between space-x-4 px-4">
-                  <h4 className="text-sm font-semibold">Dados do Usuario</h4>
-                  <Button variant="ghost" size="sm" className="w-9 p-0">
-                    <ChevronsUpDown className="h-4 w-4" />
-                    <span className="sr-only">Toggle</span>
-                  </Button>
+        <section className="rigth-section max-w-[360px] h-full bg-background flex flex-col items-end ml-5 gap-4">
+          <section className="nav-user w-full min-w-[340px] min-h-[90px] bg-foreground rounded-bl-[24px] shadow-[-4px_4px_10px_rgba(0,0,0,0.05)] px-8">
+            <div className="w-full h-full flex items-center">
+              <div className="flex items-center gap-3">
+                <Avatar className="w-12 h-12">
+                  <AvatarImage src={loggedUser?.avatar} alt="@shadcn" />
+                  <AvatarFallback>
+                    {loggedUser?.name
+                      .split(" ")
+                      .map((palavra) => palavra[0])
+                      .join("")}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="h-full flex flex-col justify-center">
+                  <h1 className="m-0 p-0 font-Inter font-normal text-sm text-foreground_90">
+                    {loggedUser?.name}
+                  </h1>
+                  <h1 className="m-0 p-0 font-Inter font-normal text-xs text-foreground_80">
+                    {loggedUser?.type.type}
+                  </h1>
                 </div>
-              </CollapsibleTrigger>
-              <CollapsibleContent className="space-y-2">
-                <div className="rounded-md border px-4 py-3 font-mono text-sm">
-                  @radix-ui/colors
-                </div>
-                <div className="rounded-md border px-4 py-3 font-mono text-sm">
-                  @stitches/react
-                </div>
-              </CollapsibleContent>
-            </Collapsible>
+              </div>
+            </div>
           </section>
 
-          <section className="outlet-context-section w-full px-[30px] mt-4">
+          <section className="outlet-context-section w-full pr-5">
             {headerComponent}
           </section>
         </section>

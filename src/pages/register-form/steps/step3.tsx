@@ -101,7 +101,7 @@ export const Step3 = () => {
             >
               Anterior
             </Button>
-            <Button variant={"primary"} onClick={submitData} className="w-full">
+            <Button variant={"default"} onClick={submitData} className="w-full">
               Finalizar
             </Button>
           </div>

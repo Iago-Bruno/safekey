@@ -1,5 +1,6 @@
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/hooks/use-toast";
+import { AuthUtils } from "@/utils/authUtils";
 import { CloseCircle } from "iconsax-react";
 import { Navigate } from "react-router-dom";
 
@@ -9,7 +10,7 @@ interface LoggedGuardProps {
 
 export const LoggedGuard: React.FC<LoggedGuardProps> = ({ children }) => {
   const { toast } = useToast();
-  const loggedUser = JSON.parse(localStorage.getItem("access_user") || "null");
+  const loggedUser = AuthUtils.getAccessUser();
 
   if (loggedUser === null) {
     toast({

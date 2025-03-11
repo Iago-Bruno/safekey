@@ -6,11 +6,12 @@ import { RegisterLayout } from "./pages/register-form/register-layout";
 import { Step1 } from "./pages/register-form/steps/step1";
 import { Step2 } from "./pages/register-form/steps/step2";
 import { Step3 } from "./pages/register-form/steps/step3";
-import { UsersList } from "./pages/users-list/usersList";
 import { Layout } from "./pages/layout";
-import { RoomsLayout } from "./pages/rooms/rooms-layout";
+import { RoomsLayout } from "./pages/rooms-list/rooms-layout";
 import LoggedGuard from "./guards/logged_guard";
 import { TemplateDecision } from "./templates/template-decision";
+import { UsersLayout } from "./pages/users-list/users-layout";
+import { ReservationsLayout } from "./pages/reservations-list/reservations-layout";
 
 export const Router = createBrowserRouter([
   {
@@ -49,16 +50,24 @@ export const Router = createBrowserRouter([
       },
       {
         path: "users",
-        element: <UsersList />,
+        element: <UsersLayout />,
       },
       {
         path: "rooms",
         element: <RoomsLayout />,
       },
+      {
+        path: "reservations",
+        element: <ReservationsLayout />,
+      },
     ],
   },
   {
     path: "/decision/reservation/:id",
-    element: <TemplateDecision />,
+    element: (
+      <LoggedGuard>
+        <TemplateDecision />
+      </LoggedGuard>
+    ),
   },
 ]);

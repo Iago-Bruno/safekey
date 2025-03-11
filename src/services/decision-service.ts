@@ -8,8 +8,4 @@ export const DecisionsService = {
   async reject(id: string | undefined) {
     return await http.get(`reservations/${id}/reject/`);
   },
-
-  async getReservation(id: string | undefined) {
-    return await http.get(`reservations/${id}/`);
-  },
 };

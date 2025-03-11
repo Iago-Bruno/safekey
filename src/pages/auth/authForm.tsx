@@ -18,6 +18,7 @@ import { CloseCircle } from "iconsax-react";
 import { useNavigate } from "react-router-dom";
 
 import "./authForm.scss";
+import { AuthUtils } from "@/utils/authUtils";
 
 const formSchema = z.object({
   email: z
@@ -40,15 +41,17 @@ export const LoginForm = () => {
     try {
       const response = await AuthService.login(data);
 
-      console.log(response);
-
       if (response.status === 200) {
-        const responseUserData = response.data.user;
-        localStorage.setItem("access_user", JSON.stringify(responseUserData));
+        const responseData = response.data;
+        const userType = responseData.user.type.type;
+
+        AuthUtils.armazenarToken(responseData.access_token);
+        AuthUtils.armazenarAccessUser(responseData.user);
+        AuthUtils.armazenarLoggedUserType(userType);
 
         toast({
           variant: "success",
-          title: `Login realizado como um ${responseUserData.type.type}!`,
+          title: `Login realizado como um ${userType}!`,
           action: (
             <ToastAction
               className="bg-transparent border-0 p-0 hover:bg-transparent"

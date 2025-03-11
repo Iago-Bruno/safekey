@@ -140,7 +140,7 @@ export const Step2 = () => {
               >
                 Anterior
               </Button>
-              <Button variant={"primary"} type="submit" className="w-full">
+              <Button variant={"default"} type="submit" className="w-full">
                 Próximo
               </Button>
             </div>

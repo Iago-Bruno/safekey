@@ -101,7 +101,7 @@ export const Step1 = () => {
                 </FormItem>
               )}
             />
-            <Button variant={"primary"} type="submit" className="w-full">
+            <Button variant={"default"} type="submit" className="w-full">
               Próximo
             </Button>
           </form>

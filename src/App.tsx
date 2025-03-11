@@ -3,12 +3,10 @@ import { Router } from "./router";
 import { Toaster } from "@/components/ui/toaster";
 
 import "./styles/App.css";
-import "./styles/embla.css";
-import "./styles/sandbox.css";
 
 function App() {
   return (
-    <div className="App theme-dark">
+    <div className="App">
       <Toaster />
       <RouterProvider router={Router} />
     </div>
