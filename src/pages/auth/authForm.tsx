@@ -75,7 +75,7 @@ export const LoginForm = () => {
       <div className="z-10 flex flex-col items-center justify-center gap-16">
         <section>
           <Label className="font-KumbhSans font-semibold text-4xl text-white">
-            Bem vindo, Entre com sua conta
+            Bem vindo, Entre com sua conta (Versão mais atual)
           </Label>
         </section>
         <section className="bg-white w-[512px] h-[382px] rounded-2xl flex flex-col items-center justify-center px-32">
