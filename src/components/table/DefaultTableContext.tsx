@@ -1,11 +1,4 @@
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { createContext, ReactNode, useContext, useMemo, useState } from "react";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -17,8 +10,6 @@ import {
   useReactTable,
   VisibilityState,
 } from "@tanstack/react-table";
-import { useOutletContext } from "react-router-dom";
-import { OutletContextType } from "@/pages/layout";
 
 export interface IDefaultDataTableContextValue<TData> {
   table: ReturnType<typeof useReactTable<TData>>;
@@ -45,7 +36,6 @@ export function DefaultDataTableProvider<TData, TValue>({
   data,
   columns,
 }: Readonly<IDefaultDataTableProviderProps<TData, TValue>>) {
-  const { setHeader } = useOutletContext<OutletContextType>();
   const [typeFilter, setTypeFilter] = useState<string>("todos");
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);

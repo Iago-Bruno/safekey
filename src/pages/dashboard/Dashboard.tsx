@@ -9,7 +9,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Label } from "@/components/ui/label";
 import {
   Accordion,
   AccordionContent,
