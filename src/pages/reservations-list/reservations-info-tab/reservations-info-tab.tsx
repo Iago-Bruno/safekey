@@ -34,7 +34,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useToast } from "@/hooks/use-toast";
-import { UsersTypeEnum } from "@/interfaces/Enums/UsersTypeEnum";
 import { IReservations } from "@/interfaces/IReservations";
 import { ReservationService } from "@/services/reservation-service";
 import { AuthUtils } from "@/utils/authUtils";
@@ -82,7 +81,7 @@ export const ReservationsInfoTab = ({
       if (response.status === 204) {
         toast({
           variant: "success",
-          title: "Salas deletados com sucesso!",
+          title: "Reservas deletados com sucesso!",
           action: (
             <ToastAction
               className="bg-transparent border-0 p-0 hover:bg-transparent"
@@ -285,11 +284,11 @@ export const ReservationsInfoTab = ({
                   <AlertDialogContent>
                     <AlertDialogHeader>
                       <AlertDialogTitle>
-                        Tem certeza que deseja deletar as salas selecionados?
+                        Tem certeza que deseja deletar as reservas selecionados?
                       </AlertDialogTitle>
                       <AlertDialogDescription>
                         Está ação não poderá ser desfeita. Isto irá deletar
-                        permanentimente a conta das salas do sistema
+                        permanentimente as reservas do sistema
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
@@ -304,9 +303,7 @@ export const ReservationsInfoTab = ({
               </TooltipTrigger>
               {handleValidateCanEditOrDelete() && (
                 <TooltipContent>
-                  <p>
-                    Somente {UsersTypeEnum.Administrador} podem deletar alunos
-                  </p>
+                  <p>So é possível deletar reservas feitas por você mesmo</p>
                 </TooltipContent>
               )}
             </Tooltip>

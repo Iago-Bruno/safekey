@@ -100,6 +100,7 @@ export const RegisterUser = () => {
         },
       ],
     },
+    mode: "onChange",
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -138,8 +139,6 @@ export const RegisterUser = () => {
       if (!originalUser) {
         throw new Error(`Usuário com id ${formUser.id} não foi encontrado`);
       }
-
-      console.log(formUser);
 
       return {
         id: formUser.id,
@@ -256,16 +255,24 @@ export const RegisterUser = () => {
       </TooltipProvider>
 
       <DialogContent
+        key={isEdit ? "edit" : "create"}
         aria-describedby={undefined}
         forceMount
         className="max-w-screen-lg px-8 py-12 max-h-[80vh] overflow-auto"
       >
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="">
+          <form
+            onSubmit={form.handleSubmit(onSubmit, (errors) =>
+              console.log(errors)
+            )}
+            className=""
+          >
             <DialogHeader className="flex flex-row justify-between items-center w-full">
               <DialogTitle>
                 <Label className="font-KumbhSans font-semibold text-3xl text-foreground_100">
-                  Adicionar novos acessos
+                  {isEdit
+                    ? "Atualizar/Adicionar acessos"
+                    : "Adicionar novos acessos"}
                 </Label>
               </DialogTitle>
               <div>
@@ -427,7 +434,7 @@ export const RegisterUser = () => {
               <Button
                 variant="primary"
                 type="submit"
-                disabled={fields.length === 0}
+                disabled={fields.length === 0 && !isEdit}
               >
                 {loadingSubmit ? (
                   <CommonLoading size="6" color="#fff" />

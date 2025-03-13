@@ -7,7 +7,7 @@ export const ReservationList = () => {
   const { reservationsList, handleGetReservations } = useReservationsContext();
 
   useWebSocket({
-    url: "ws://98.81.255.202:80/ws/status/",
+    url: import.meta.env.VITE_WEBSOCKET_URL,
     onMessage: (data) => {
       if (data.updated && data.updated === "reserva") {
         handleGetReservations();

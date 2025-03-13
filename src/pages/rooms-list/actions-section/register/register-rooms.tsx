@@ -108,6 +108,7 @@ export const RegisterRooms = () => {
         },
       ],
     },
+    mode: "onChange",
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -244,7 +245,9 @@ export const RegisterRooms = () => {
             <DialogHeader className="flex flex-row justify-between items-center w-full">
               <DialogTitle>
                 <Label className="font-KumbhSans font-semibold text-3xl text-foreground_100">
-                  Adicionar novas salas
+                  {isEdit
+                    ? "Atualizar/Adicionar salas"
+                    : "Adicionar novas salas"}
                 </Label>
               </DialogTitle>
               <div>

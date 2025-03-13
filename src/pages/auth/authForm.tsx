@@ -15,10 +15,11 @@ import { AuthService } from "@/services/auth-service";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { CloseCircle } from "iconsax-react";
-import { useNavigate } from "react-router-dom";
-
-import "./authForm.scss";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AuthUtils } from "@/utils/authUtils";
+import "./authForm.scss";
+import { useState } from "react";
+import { CommonLoading } from "@/components/loading/CommonLoading";
 
 const formSchema = z.object({
   email: z
@@ -32,12 +33,16 @@ const formSchema = z.object({
 export const LoginForm = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
+  const location = useLocation();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
+    setLoading(true);
+
     try {
       const response = await AuthService.login(data);
 
@@ -46,6 +51,7 @@ export const LoginForm = () => {
         const userType = responseData.user.type.type;
 
         AuthUtils.armazenarToken(responseData.access_token);
+        AuthUtils.armazenarRefreshToken(responseData.refresh_token);
         AuthUtils.armazenarAccessUser(responseData.user);
         AuthUtils.armazenarLoggedUserType(userType);
 
@@ -62,7 +68,9 @@ export const LoginForm = () => {
           ),
         });
 
-        navigate("/dashboard");
+        const from = location.state?.from?.pathname || "/dashboard";
+        setLoading(false);
+        navigate(from, { replace: true });
       }
     } catch (error) {
       console.error(error);
@@ -75,7 +83,7 @@ export const LoginForm = () => {
       <div className="z-10 flex flex-col items-center justify-center gap-16">
         <section>
           <Label className="font-KumbhSans font-semibold text-4xl text-white">
-            Bem vindo, Entre com sua conta (Versão mais atual)
+            Bem vindo, Entre com sua conta
           </Label>
         </section>
         <section className="bg-white w-[512px] h-[382px] rounded-2xl flex flex-col items-center justify-center px-32">
@@ -121,7 +129,7 @@ export const LoginForm = () => {
                 )}
               />
               <Button variant={"default"} type="submit" className="w-full">
-                Entrar
+                {loading ? <CommonLoading /> : "Entrar"}
               </Button>
             </form>
           </Form>

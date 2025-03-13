@@ -2,17 +2,18 @@ import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/hooks/use-toast";
 import { AuthUtils } from "@/utils/authUtils";
 import { CloseCircle } from "iconsax-react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 
 interface LoggedGuardProps {
   children: React.ReactNode;
 }
 
 export const LoggedGuard: React.FC<LoggedGuardProps> = ({ children }) => {
+  const location = useLocation();
   const { toast } = useToast();
-  const loggedUser = AuthUtils.getAccessUser();
+  const isAuthenticated = AuthUtils.temTokenValido();
 
-  if (loggedUser === null) {
+  if (!isAuthenticated) {
     toast({
       variant: "destructive",
       title: "Opps! Parece que você não fez login",
@@ -27,7 +28,7 @@ export const LoggedGuard: React.FC<LoggedGuardProps> = ({ children }) => {
       ),
     });
 
-    return <Navigate to="/" replace />;
+    return <Navigate to="/" state={{ from: location }} replace />;
   }
 
   return children;

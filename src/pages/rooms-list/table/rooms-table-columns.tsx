@@ -7,6 +7,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { RoomStatusEnum } from "@/interfaces/Enums/RoomStatusEnum";
 import { RoomStatusKeyEnum } from "@/interfaces/Enums/RoomStatusKeyEnum";
 import { IRooms } from "@/interfaces/IRooms";
 import { RoomsService } from "@/services/rooms-service";
@@ -151,11 +158,12 @@ export const RoomsColumns: ColumnDef<IRooms>[] = [
       return <div className="uppercase">Status da chave física</div>;
     },
     cell: ({ row }) => {
+      const roomStatus = row.original.status;
       const statusKey = row.original.status_key; // Valor atual da linha
 
       return (
         <Select
-          defaultValue={statusKey} // Define o valor inicial do select
+          defaultValue={statusKey}
           onValueChange={(newValue) =>
             handleChangeStatusKey(row.original, newValue)
           }
@@ -164,11 +172,53 @@ export const RoomsColumns: ColumnDef<IRooms>[] = [
             <SelectValue placeholder="Selecione um status da chave física" />
           </SelectTrigger>
           <SelectContent>
-            {RoomStatusKeyEnum.getOptions().map((status) => (
-              <SelectItem key={status.value} value={status.value}>
-                {status.label}
-              </SelectItem>
-            ))}
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <SelectItem
+                    key={RoomStatusKeyEnum.Disponivel}
+                    value={RoomStatusKeyEnum.Disponivel}
+                    disabled={
+                      roomStatus.replace(/"/g, "") !== RoomStatusEnum.Disponivel
+                    }
+                  >
+                    {RoomStatusKeyEnum.Disponivel}
+                  </SelectItem>
+                </TooltipTrigger>
+                {roomStatus.replace(/"/g, "") !== RoomStatusEnum.Disponivel && (
+                  <TooltipContent>
+                    <p>
+                      O status da chave so pode ser mudado para "Disponivel" se
+                      a reserva estiver como "Disponivel"
+                    </p>
+                  </TooltipContent>
+                )}
+              </Tooltip>
+            </TooltipProvider>
+
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <SelectItem
+                    key={RoomStatusKeyEnum.Retirada}
+                    value={RoomStatusKeyEnum.Retirada}
+                    disabled={
+                      roomStatus.replace(/"/g, "") !== RoomStatusEnum.Reservada
+                    }
+                  >
+                    {RoomStatusKeyEnum.Retirada}
+                  </SelectItem>
+                </TooltipTrigger>
+                {
+                  <TooltipContent>
+                    <p>
+                      O status da chave so pode ser mudado para "Disponivel" se
+                      a reserva estiver como "Disponivel"
+                    </p>
+                  </TooltipContent>
+                }
+              </Tooltip>
+            </TooltipProvider>
           </SelectContent>
         </Select>
       );

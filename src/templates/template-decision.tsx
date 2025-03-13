@@ -22,8 +22,6 @@ import { IRooms } from "@/interfaces/IRooms";
 import { IUsers } from "@/interfaces/IUser";
 import { DecisionsService } from "@/services/decision-service";
 import { ReservationService } from "@/services/reservation-service";
-import { RoomsService } from "@/services/rooms-service";
-import { UsersService } from "@/services/users-service";
 import {
   AlignBottom,
   Building,
@@ -157,26 +155,10 @@ export const TemplateDecision = () => {
   useEffect(() => {
     const getReservationData = async () => {
       try {
-        const responseReservation = await ReservationService.getReservationById(
-          id
-        );
-        const responseAluno = await UsersService.getUserById(
-          responseReservation.data.user
-        );
-        const responseRoom = await RoomsService.getRoomById(
-          responseReservation.data.room
-        );
+        const response = await ReservationService.getReservationById(id);
 
-        if (
-          responseReservation.status === 200 &&
-          responseAluno.status === 200 &&
-          responseRoom.status === 200
-        ) {
-          setCompletedReservation({
-            ...responseReservation.data,
-            user: { ...responseAluno.data },
-            room: { ...responseRoom.data },
-          });
+        if (response.status === 200) {
+          setCompletedReservation(response.data);
         }
       } catch (error) {
         console.error(error);
@@ -203,7 +185,7 @@ export const TemplateDecision = () => {
             </Label>
           ) : (
             <Label className="font-KumbhSans font-semibold text-xl text-white">
-              Você foi solicitado para confirmar uma reserva
+              Você foi requisitado para confirmar uma reserva
             </Label>
           )}
         </section>
@@ -215,7 +197,7 @@ export const TemplateDecision = () => {
             <div className="w-full flex flex-col py-4 px-4">
               <section className="section-avatar flex flex-col px-4 mb-4 gap-2">
                 <Label className="font-Inter font-medium text-sm text-foreground_80">
-                  Responsável pela Reserva
+                  Solicitante da Reserva
                 </Label>
                 <div className="flex items-center gap-3">
                   <Avatar className="w-12 h-12 border border-black">
@@ -375,13 +357,13 @@ export const TemplateDecision = () => {
               </section>
 
               <section className="buttons-section flex justify-between mt-4">
-                {completedReservation?.status !==
+                {completedReservation?.status ===
                 ReservationStatusEnum.Pendente ? (
                   <>
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
                         <Button
-                          variant={"default"}
+                          variant={"destructive"}
                           type="submit"
                           className="w-[40%]"
                         >

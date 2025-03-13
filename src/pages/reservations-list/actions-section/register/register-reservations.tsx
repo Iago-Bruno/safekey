@@ -249,6 +249,7 @@ export const RegisterReservations = () => {
         },
       ],
     },
+    mode: "onChange",
   });
   const { fields, append, remove } = useFieldArray({
     control: form.control,
@@ -437,7 +438,7 @@ export const RegisterReservations = () => {
             <DialogHeader className="flex flex-row justify-between items-center w-full">
               <DialogTitle>
                 <Label className="font-KumbhSans font-semibold text-3xl text-foreground_100">
-                  Criar novas reservas
+                  {isEdit ? "Atualizar/Criar reservas" : "Criar novas reservas"}
                 </Label>
               </DialogTitle>
               <div>
@@ -550,7 +551,7 @@ export const RegisterReservations = () => {
                               type="date"
                               className="w-full"
                               {...field}
-                              min={new Date().toISOString().split("T")[0]}
+                              // min={new Date().toISOString().split("T")[0]}
                             />
                           </FormControl>
                           <FormMessage />

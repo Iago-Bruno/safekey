@@ -10,7 +10,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { AuthConstants } from "@/utils/authConstants";
+import { AuthUtils } from "@/utils/authUtils";
 import { Logout, Setting2 } from "iconsax-react";
 import { useNavigate } from "react-router-dom";
 
@@ -19,9 +19,7 @@ export const NavConfig = () => {
   const { isMobile } = useSidebar();
 
   const handleLogOut = () => {
-    localStorage.removeItem(AuthConstants.ACCESS_TOKEN);
-    localStorage.removeItem(AuthConstants.ACCESS_USER);
-    localStorage.removeItem(AuthConstants.LOGGED_USER_TYPE);
+    AuthUtils.logout();
     navigate("/");
   };
 

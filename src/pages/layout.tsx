@@ -3,7 +3,7 @@ import SidebarLayout from "@/components/sidebar/sidebar-layout";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { IUsers } from "@/interfaces/IUser";
 import { Outlet } from "react-router-dom";
-import safekeyLogo from "../assets/icons/safekey-log.webp";
+import safekeyLogo from "../assets/icons/logo.png";
 import { AuthUtils } from "@/utils/authUtils";
 export interface OutletContextType {
   setHeader: (component: React.ReactNode) => void;
@@ -25,9 +25,8 @@ export const Layout = () => {
               <img
                 src={safekeyLogo}
                 alt="SafeKey - Logo"
-                className="w-20 h-20"
+                className="w-36 h-16"
               />
-              <h1 className="text-black">SafeKey Logo</h1>
             </header>
           </section>
           <section className="body-section flex justify-start h-full gap-4">
