@@ -234,18 +234,18 @@ export const RegisterReservations = () => {
       reservations: [
         {
           date: new Date().toISOString().split("T")[0],
-          endTime: "23:59",
-          startTime: "22:00",
-          reason: "Reserva feita apenas para testes | 1",
+          startTime: "17:00",
+          endTime: "18:00",
+          reason: "Aula de informática básica",
           commentary: "Somente um comentário extra",
-          room: "1",
+          room: "12",
         },
         {
           date: new Date().toISOString().split("T")[0],
-          endTime: "22:00",
-          startTime: "20:00",
-          reason: "Reserva feita apenas para testes | 2",
-          room: "1",
+          startTime: "19:00",
+          endTime: "20:00",
+          reason: "Apresentação dos trabalhos",
+          room: "13",
         },
       ],
     },
@@ -551,7 +551,7 @@ export const RegisterReservations = () => {
                               type="date"
                               className="w-full"
                               {...field}
-                              // min={new Date().toISOString().split("T")[0]}
+                              min={new Date().toISOString().split("T")[0]}
                             />
                           </FormControl>
                           <FormMessage />

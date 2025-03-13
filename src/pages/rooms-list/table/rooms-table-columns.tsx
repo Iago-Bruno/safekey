@@ -209,14 +209,14 @@ export const RoomsColumns: ColumnDef<IRooms>[] = [
                     {RoomStatusKeyEnum.Retirada}
                   </SelectItem>
                 </TooltipTrigger>
-                {
+                {roomStatus.replace(/"/g, "") !== RoomStatusEnum.Reservada && (
                   <TooltipContent>
                     <p>
                       O status da chave so pode ser mudado para "Disponivel" se
                       a reserva estiver como "Disponivel"
                     </p>
                   </TooltipContent>
-                }
+                )}
               </Tooltip>
             </TooltipProvider>
           </SelectContent>

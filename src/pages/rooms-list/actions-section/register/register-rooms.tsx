@@ -95,15 +95,15 @@ export const RegisterRooms = () => {
     defaultValues: {
       rooms: [
         {
-          name: "Sala de Reunião 1",
-          block: "Bloco A",
-          floor: "1° Andar",
-          type: "Sala de Reunião",
+          name: "Laboratório de TSI 1",
+          block: "Bloco B",
+          floor: "2° Andar",
+          type: "Laboratório",
         },
         {
-          name: "Auditório de TSI",
-          block: "Bloco B",
-          floor: "1° Andar",
+          name: "Auditório de apresentação",
+          block: "Bloco A",
+          floor: "2° Andar",
           type: "Auditório",
         },
       ],
@@ -216,6 +216,7 @@ export const RegisterRooms = () => {
               className={`${
                 !AuthUtils.verifyLoggedUserIsAdmin() && "!cursor-not-allowed"
               }`}
+              disabled={!AuthUtils.verifyLoggedUserIsAdmin()}
             >
               <Button
                 variant={"terciary"}

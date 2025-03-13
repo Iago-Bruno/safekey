@@ -21,7 +21,7 @@ export const Layout = () => {
       <section className="main-section w-full h-full flex">
         <section className="flex flex-col w-full h-full p-4 bg-foreground border border-l border-[#7FBDE4] border-opacity-30">
           <section className="header-section">
-            <header className="flex items-center h-14 mb-8">
+            <header className="flex items-center h-14 mb-8 ml-3">
               <img
                 src={safekeyLogo}
                 alt="SafeKey - Logo"

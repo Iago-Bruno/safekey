@@ -88,14 +88,14 @@ export const RegisterUser = () => {
       users: [
         {
           type: "3",
-          name: "Teste 1 - Iago",
-          email: "teste1iago@gmail.com",
+          name: "José Pereira",
+          email: "jose.pereira@gmail.com",
           password: "12345678",
         },
         {
           type: "2",
-          name: "Teste 2 - Iago",
-          email: "teste2iago@gmail.com",
+          name: "Carolina Silva",
+          email: "carolina.silva@gmail.com",
           password: "12345678",
         },
       ],
@@ -235,6 +235,7 @@ export const RegisterUser = () => {
               className={`${
                 !AuthUtils.verifyLoggedUserIsAdmin() && "!cursor-not-allowed"
               }`}
+              disabled={!AuthUtils.verifyLoggedUserIsAdmin()}
             >
               <Button
                 variant={"terciary"}
@@ -391,7 +392,7 @@ export const RegisterUser = () => {
                         </FormItem>
                       )}
                     />
-                    {isEdit && (
+                    {!isEdit && (
                       <FormField
                         control={form.control}
                         name={`users.${index}.password`}
