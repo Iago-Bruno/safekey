@@ -58,7 +58,7 @@ export const Dashboard = () => {
   }, []);
 
   return (
-    <div className="w-full h-full mr-4 ml-4 mt-12">
+    <div className="w-full h-full mr-4 ml-4 mt-12 pr-4">
       <section className="sectin-greetings">
         <div className="flex flex-col gap-4">
           <span className="flex gap-4 items-center">
